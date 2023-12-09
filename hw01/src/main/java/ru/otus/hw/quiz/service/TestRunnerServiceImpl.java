@@ -1,8 +1,6 @@
-package ru.otus.hw.quiz.service.impl;
+package ru.otus.hw.quiz.service;
 
 import lombok.RequiredArgsConstructor;
-import ru.otus.hw.quiz.service.TestRunnerService;
-import ru.otus.hw.quiz.service.TestService;
 
 @RequiredArgsConstructor
 public class TestRunnerServiceImpl implements TestRunnerService {

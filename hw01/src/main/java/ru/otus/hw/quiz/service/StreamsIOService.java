@@ -1,6 +1,4 @@
-package ru.otus.hw.quiz.service.impl;
-
-import ru.otus.hw.quiz.service.IOService;
+package ru.otus.hw.quiz.service;
 
 import java.io.PrintStream;
 
