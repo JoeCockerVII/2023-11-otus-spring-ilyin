@@ -3,9 +3,6 @@ package ru.otus.hw.quiz.service;
 import lombok.RequiredArgsConstructor;
 import ru.otus.hw.quiz.dao.QuestionDao;
 import ru.otus.hw.quiz.domain.Answer;
-import ru.otus.hw.quiz.domain.Question;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
@@ -18,14 +15,15 @@ public class TestServiceImpl implements TestService {
     public void executeTest() {
         ioService.printLine("");
         ioService.printFormattedLine("Please answer the questions below%n");
-        List<Question> questions = questionDao.findAll();
+        var questions = questionDao.findAll();
 
-        for (Question question : questions) {
-            List<String> answerList = question.answers().stream().map(Answer::text).toList();
-            String answers = String.join("\n- ", answerList);
-            ioService.printFormattedLine("%s",question.text());
-            ioService.printFormattedLine("- %s\n",answers);
-        }
+        questions.forEach(question -> {
+            ioService.printLine("\n" + question.text());
+            int answerNumber = 0;
+            for (Answer answer : question.answers()) {
+                System.out.println(++answerNumber + ". " + answer.text() + " | " + answer.isCorrect());
+            }
+        });
 
     }
 }

@@ -12,10 +12,12 @@
         </constructor-arg>
     </bean>
 
+    <bean id="fileNameProvider" class="ru.otus.hw.quiz.config.AppProperties">
+        <constructor-arg value="questions.csv" />
+    </bean>
+
     <bean id="questionDAO" class="ru.otus.hw.quiz.dao.CsvQuestionDao">
-        <constructor-arg>
-            <value type="java.lang.String">questions.csv</value>
-        </constructor-arg>
+        <constructor-arg ref = "fileNameProvider"/>
     </bean>
 
     <bean id="testService" class="ru.otus.hw.quiz.service.TestServiceImpl">

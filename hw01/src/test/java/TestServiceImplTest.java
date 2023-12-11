@@ -1,35 +1,33 @@
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import ru.otus.hw.quiz.config.TestFileNameProvider;
 import ru.otus.hw.quiz.dao.CsvQuestionDao;
 import ru.otus.hw.quiz.domain.Answer;
-import ru.otus.hw.quiz.domain.Question;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-import java.util.List;
-
-
-@ExtendWith(MockitoExtension.class)
 class TestServiceImplTest {
 
-    @Mock
-    private CsvQuestionDao csvQuestionDao;
+    private static final String QUESTIONS_FILE_NAME = "questionsTest.csv";
+
+    private final TestFileNameProvider mockTestFileNameProvider = Mockito.mock(TestFileNameProvider.class);
+    private final CsvQuestionDao csvQuestionDao = new CsvQuestionDao(mockTestFileNameProvider);
 
     @Test
-    public void runTest() {
-        Answer answer1 = new Answer("2", false);
-        Answer answer2 = new Answer("3", true);
-        Answer answer3 = new Answer("1", false);
-        Question question = new Question("How many Newton's laws exist?", List.of(answer1, answer2, answer3));
+    @DisplayName("Test: check correct answer for question from file")
+    void testFirstQuestionFromCSVFile() {
 
-        List<Question> expectedQuestions = List.of(question);
+        var expectedAnswer = "Nepal";
 
-        Mockito.when(csvQuestionDao.findAll()).thenReturn(expectedQuestions);
+        when(mockTestFileNameProvider.getTestFileName()).thenReturn(QUESTIONS_FILE_NAME);
 
-        List<Question> actualQuestions = csvQuestionDao.findAll();
+        var actualAnswer = csvQuestionDao.findAll().get(0).answers()
+                .stream()
+                .filter(Answer::isCorrect).toList().get(0).text();
 
-        Assertions.assertEquals(expectedQuestions, actualQuestions);
-    }}
+        assertEquals(expectedAnswer, actualAnswer);
+    }
+
+}
