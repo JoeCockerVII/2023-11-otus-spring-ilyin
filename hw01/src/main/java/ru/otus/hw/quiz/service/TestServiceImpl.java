@@ -21,7 +21,7 @@ public class TestServiceImpl implements TestService {
             ioService.printLine("\n" + question.text());
             int answerNumber = 0;
             for (Answer answer : question.answers()) {
-                System.out.println(++answerNumber + ". " + answer.text() + " | " + answer.isCorrect());
+                ioService.printFormattedLine("%d. %s | %s",++answerNumber,answer.text(),answer.isCorrect());
             }
         });
 

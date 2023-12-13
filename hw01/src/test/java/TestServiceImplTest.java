@@ -17,7 +17,7 @@ class TestServiceImplTest {
 
     @Test
     @DisplayName("Test: check correct answer for question from file")
-    void testFirstQuestionFromCSVFile() {
+    void correctAnswerPositiveTest() {
 
         var expectedAnswer = "Nepal";
 
