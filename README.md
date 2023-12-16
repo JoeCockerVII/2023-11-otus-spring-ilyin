@@ -4,3 +4,4 @@
 
 ## Материалы репозитория
 1. [Введение в Spring Framework: Test Quiz](hw01)
+2. [Конфигурирование Spring-приложений : Test Quiz](hw02)
