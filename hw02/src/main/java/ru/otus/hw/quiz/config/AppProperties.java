@@ -1,17 +1,15 @@
 package ru.otus.hw.quiz.config;
 
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-@Setter
+@Component
 public class AppProperties implements TestConfig, TestFileNameProvider {
 
-    // внедрить свойство из application.properties //todo
-    @Value("$(test.rightAnswersCountToPass)")
+    @Value("${test.rightAnswersCountToPass}")
     private int rightAnswersCountToPass;
 
-    // внедрить свойство из application.properties //todo
-    @Value("$(test.fileName)")
+    @Value("${test.fileName}")
     private String testFileName;
 
     @Override

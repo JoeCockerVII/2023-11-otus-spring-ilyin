@@ -1,3 +1,5 @@
+package dao;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -8,7 +10,8 @@ import ru.otus.hw.quiz.domain.Answer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-class TestServiceImplTest {
+@DisplayName("Test dao")
+class QuestionDaoTest {
 
     private static final String QUESTIONS_FILE_NAME = "questionsTest.csv";
 

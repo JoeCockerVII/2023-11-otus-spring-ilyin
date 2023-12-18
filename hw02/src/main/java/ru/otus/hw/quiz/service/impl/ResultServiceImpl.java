@@ -1,9 +1,13 @@
-package ru.otus.hw.quiz.service;
+package ru.otus.hw.quiz.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import ru.otus.hw.quiz.config.TestConfig;
 import ru.otus.hw.quiz.domain.TestResult;
+import ru.otus.hw.quiz.service.IOService;
+import ru.otus.hw.quiz.service.ResultService;
 
+@Service
 @RequiredArgsConstructor
 public class ResultServiceImpl implements ResultService {
 

@@ -1,11 +1,14 @@
-package ru.otus.hw.quiz.service;
+package ru.otus.hw.quiz.service.impl;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import ru.otus.hw.quiz.service.IOService;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
+@Service
 public class StreamsIOService implements IOService {
     private static final int MAX_ATTEMPTS = 10;
 
