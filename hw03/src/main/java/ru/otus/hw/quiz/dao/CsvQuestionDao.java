@@ -8,6 +8,7 @@ import ru.otus.hw.quiz.config.TestFileNameProvider;
 import ru.otus.hw.quiz.domain.Question;
 import ru.otus.hw.quiz.dao.dto.QuestionDto;
 import ru.otus.hw.quiz.exceptions.QuestionReadException;
+import ru.otus.hw.quiz.service.LocalizedIOService;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,6 +21,8 @@ import java.util.stream.Collectors;
 public class CsvQuestionDao implements QuestionDao {
 
     private final TestFileNameProvider testFileNameProvider;
+
+    private final LocalizedIOService ioService;
 
     @Override
     public List<Question> findAll() {
@@ -39,7 +42,7 @@ public class CsvQuestionDao implements QuestionDao {
                     .map(QuestionDto::toDomainObject)
                     .collect(Collectors.toList());
         } catch (IllegalStateException | IOException e) {
-            throw new QuestionReadException("Questions failed to read", e);
+            throw new QuestionReadException(ioService.readStringWithPromptLocalized("error.read.file"), e);
         }
     }
 }

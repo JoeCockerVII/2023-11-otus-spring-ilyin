@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.otus.hw.quiz.config.TestConfig;
 import ru.otus.hw.quiz.domain.TestResult;
-import ru.otus.hw.quiz.service.IOService;
+import ru.otus.hw.quiz.service.LocalizedIOService;
 import ru.otus.hw.quiz.service.ResultService;
 
 @Service
@@ -13,20 +13,20 @@ public class ResultServiceImpl implements ResultService {
 
     private final TestConfig testConfig;
 
-    private final IOService ioService;
+    private final LocalizedIOService ioService;
 
     @Override
     public void showResult(TestResult testResult) {
         ioService.printLine("");
-        ioService.printLine("Test results: ");
-        ioService.printFormattedLine("Student: %s", testResult.getStudent().getFullName());
-        ioService.printFormattedLine("Answered questions count: %d", testResult.getAnsweredQuestions().size());
-        ioService.printFormattedLine("Right answers count: %d", testResult.getRightAnswersCount());
+        ioService.printLineLocalized("showResult.testResult");
+        ioService.printFormattedLineLocalized("showResult.student", testResult.getStudent().getFullName());
+        ioService.printFormattedLineLocalized("showResult.answered.questions", testResult.getAnsweredQuestions().size());
+        ioService.printFormattedLineLocalized("showResult.right.answers.count", testResult.getRightAnswersCount());
 
         if (testResult.getRightAnswersCount() >= testConfig.getRightAnswersCountToPass()) {
-            ioService.printLine("Congratulations! You passed test!");
+            ioService.printLineLocalized("showResult.succeed");
             return;
         }
-        ioService.printLine("Sorry. You fail test.");
+        ioService.printLineLocalized("showResult.fail");
     }
 }
