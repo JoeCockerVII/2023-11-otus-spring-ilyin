@@ -4,4 +4,8 @@ import java.util.Locale;
 
 public interface LocaleConfig {
     Locale getLocale();
+
+    String getEncoding();
+
+    String getBaseName();
 }
