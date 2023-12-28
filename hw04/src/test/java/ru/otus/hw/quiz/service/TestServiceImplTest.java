@@ -5,9 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+
+import ru.otus.hw.quiz.config.TestConfiguration;
 import ru.otus.hw.quiz.dao.QuestionDao;
 import ru.otus.hw.quiz.domain.Answer;
 import ru.otus.hw.quiz.domain.Question;
@@ -18,12 +21,13 @@ import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Test service")
+@ContextConfiguration(classes = TestConfiguration.class)
+@SpringBootTest()
 class TestServiceImplTest {
 
-    @Mock
-    private LocalizedIOService ioServiceMock;
-    @Mock
-    private QuestionDao questionDaoMock;
+    private final LocalizedIOService ioServiceMock = Mockito.mock(LocalizedIOService.class);
+
+    private final QuestionDao questionDaoMock = Mockito.mock(QuestionDao.class);
 
     @InjectMocks
     private TestServiceImpl testService;
