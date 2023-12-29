@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Test dao")
-@ContextConfiguration(classes = TestConfiguration.class)
+@ContextConfiguration()
 @SpringBootTest()
 class QuestionDaoTest {
 
