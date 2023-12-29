@@ -13,6 +13,7 @@
         <module>hw02</module>
         <module>hw03</module>
         <module>hw04</module>
+        <module>hw05</module>
     </modules>
 
     <properties>
@@ -34,6 +35,11 @@
         </checkstyle.config.url>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
