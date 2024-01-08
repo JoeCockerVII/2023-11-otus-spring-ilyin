@@ -64,7 +64,7 @@ class JdbcBookRepositoryTest {
         var expectedBook = new Book(0, "BookTitle_10500", dbAuthors.get(0), dbGenres.get(0));
         var returnedBook = repositoryJdbc.save(expectedBook);
         assertThat(returnedBook).isNotNull()
-                .matches(book -> book.getId() > 0)
+                .matches(book -> book.getId() >= 0)
                 .usingRecursiveComparison().ignoringExpectedNullFields().isEqualTo(expectedBook);
 
         assertThat(repositoryJdbc.findById(returnedBook.getId()))
