@@ -21,14 +21,14 @@ public class JdbcAuthorRepository implements AuthorRepository {
 
     @Override
     public List<Author> findAll() {
-        return jdbc.query("Select id, full_name from authors",new AuthorRowMapper());
+        return jdbc.query("Select author_id, full_name from authors",new AuthorRowMapper());
     }
 
     @Override
     public Optional<Author> findById(long id) {
         try {
             return Optional.ofNullable(
-                    jdbc.queryForObject("select id, full_name from authors where id = :id",
+                    jdbc.queryForObject("select author_id, full_name from authors where author_id = :id",
                             Collections.singletonMap("id", id), new AuthorRowMapper()));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -39,7 +39,7 @@ public class JdbcAuthorRepository implements AuthorRepository {
 
         @Override
         public Author mapRow(ResultSet rs, int i) throws SQLException {
-            return new Author(rs.getLong("id"),rs.getString("full_name"));
+            return new Author(rs.getLong("author_id"),rs.getString("full_name"));
         }
     }
 }

@@ -21,14 +21,14 @@ public class JdbcGenreRepository implements GenreRepository {
 
     @Override
     public List<Genre> findAll() {
-        return jdbc.query("Select id, name from genres",new GenreRowMapper());
+        return jdbc.query("Select genre_id, name from genres",new GenreRowMapper());
     }
 
     @Override
     public Optional<Genre> findById(long id) {
         try {
             return Optional.ofNullable(
-                    jdbc.queryForObject("select id, name from genres where id = :id",
+                    jdbc.queryForObject("select genre_id, name from genres where genre_id = :id",
                             Collections.singletonMap("id", id), new GenreRowMapper()));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
@@ -39,7 +39,7 @@ public class JdbcGenreRepository implements GenreRepository {
 
         @Override
         public Genre mapRow(ResultSet rs, int i) throws SQLException {
-            return new Genre(rs.getLong("id"),rs.getString("name"));
+            return new Genre(rs.getLong("genre_id"),rs.getString("name"));
         }
     }
 }

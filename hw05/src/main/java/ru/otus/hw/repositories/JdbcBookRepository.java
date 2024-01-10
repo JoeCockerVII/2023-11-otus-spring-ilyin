@@ -29,13 +29,13 @@ public class JdbcBookRepository implements BookRepository {
     public Optional<Book> findById(long id) {
         try {
             return Optional.ofNullable(jdbc.queryForObject("""
-                    Select t1.id as id, t1.title as title,
-                           t2.id as author_id, t2.full_name as author_name,
-                           t3.id as genre_id, t3.name as genre_name
+                    Select t1.book_id, t1.title,
+                           t2.author_id, t2.full_name as author_name,
+                           t3.genre_id, t3.name as genre_name
                     from books t1
-                    join authors t2 on t1.author_id = t2.id
-                    join genres t3 on t1.genre_id = t3.id
-                    where t1.id = :id
+                    join authors t2 on t1.author_id = t2.author_id
+                    join genres t3 on t1.genre_id = t3.genre_id
+                    where t1.book_id = :id
                     """, Collections.singletonMap("id", id), new BookRowMapper())
             );
         } catch (EmptyResultDataAccessException e) {
@@ -46,12 +46,12 @@ public class JdbcBookRepository implements BookRepository {
     @Override
     public List<Book> findAll() {
         return jdbc.query("""
-                    Select t1.id as id, t1.title as title,
-                           t2.id as author_id, t2.full_name as author_name,
-                           t3.id as genre_id, t3.name as genre_name
-                    from books t1 
-                    join authors t2 on t1.author_id = t2.id
-                    join genres t3 on t1.genre_id = t3.id;
+                    Select t1.book_id, t1.title,
+                           t2.author_id, t2.full_name as author_name,
+                           t3.genre_id, t3.name as genre_name
+                    from books t1
+                    join authors t2 on t1.author_id = t2.author_id
+                    join genres t3 on t1.genre_id = t3.genre_id
               """, new BookRowMapper());
     }
 
@@ -65,21 +65,23 @@ public class JdbcBookRepository implements BookRepository {
 
     @Override
     public void deleteById(long id) {
-        jdbc.update("delete from books where id = :id", Map.of("id", id));
+        jdbc.update("delete from books where book_id = :id", Map.of("id", id));
     }
 
     private Book insert(Book book) {
         var keyHolder = new GeneratedKeyHolder();
 
-        var params = Map.of("id", book.getId(),
+        var params = Map.of("bookId", book.getId(),
                 "title", book.getTitle(),
                 "authorId", book.getAuthor().getId(),
                 "genreId", book.getGenre().getId()
         );
 
-        jdbc.update("INSERT INTO books(id, title, genre_id, author_id) VALUES (:id, :title, :genreId, :authorId)",
-                new MapSqlParameterSource(params), keyHolder
-        );
+        jdbc.update("""
+                        INSERT INTO books(book_id, title, genre_id, author_id)
+                        VALUES (:bookId, :title, :genreId, :authorId)
+                        """,
+                new MapSqlParameterSource(params), keyHolder);
 
         //noinspection DataFlowIssue
         book.setId(keyHolder.getKeyAs(Long.class));
@@ -90,8 +92,8 @@ public class JdbcBookRepository implements BookRepository {
 
         Optional.of(
                 jdbc.update(
-                        "UPDATE Books SET title = :title, author_id = :authorId, genre_id = :genreId WHERE ID = :id",
-                    Map.of("id", book.getId(),
+                "UPDATE Books SET title = :title, author_id = :authorId, genre_id = :genreId WHERE book_id = :bookId",
+                    Map.of("bookId", book.getId(),
                             "title", book.getTitle(),
                             "authorId", book.getAuthor().getId(),
                             "genreId", book.getGenre().getId())))
@@ -104,7 +106,7 @@ public class JdbcBookRepository implements BookRepository {
         @Override
         public Book mapRow(ResultSet rs, int rowNum) throws SQLException {
             return Book.builder()
-                    .id(rs.getLong("id"))
+                    .id(rs.getLong("book_id"))
                     .title(rs.getString("title"))
                     .author(new Author(rs.getLong("author_id"),rs.getString("author_name")))
                     .genre(new Genre(rs.getLong("genre_id"), rs.getString("genre_name")))
