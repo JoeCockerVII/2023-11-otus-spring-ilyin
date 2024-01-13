@@ -1,7 +1,6 @@
 package ru.otus.hw.repositories;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
@@ -26,13 +25,10 @@ public class JdbcGenreRepository implements GenreRepository {
 
     @Override
     public Optional<Genre> findById(long id) {
-        try {
-            return Optional.ofNullable(
-                    jdbc.queryForObject("select genre_id, name from genres where genre_id = :id",
-                            Collections.singletonMap("id", id), new GenreRowMapper()));
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+        var result = jdbc.query("select genre_id, name from genres where genre_id = :id",
+                Collections.singletonMap("id", id), new GenreRowMapper());
+        return result.isEmpty() ? Optional.empty() : result.stream().findFirst();
+
     }
 
     private static class GenreRowMapper implements RowMapper<Genre> {
