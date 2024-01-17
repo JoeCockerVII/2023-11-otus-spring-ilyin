@@ -35,7 +35,7 @@ public class JpaBookRepository implements BookRepository {
     }
 
     @Override
-    public Book saveAndUpdate(Book book) {
+    public Book saveOrUpdate(Book book) {
         if (book.getId() == 0) {
             em.persist(book);
             return book;

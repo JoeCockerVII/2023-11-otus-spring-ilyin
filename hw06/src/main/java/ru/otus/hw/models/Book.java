@@ -12,13 +12,11 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.NamedAttributeNode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -28,7 +26,6 @@ import lombok.NoArgsConstructor;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
     private long id;
 
     @Column(name = "title", nullable = false, unique = true)

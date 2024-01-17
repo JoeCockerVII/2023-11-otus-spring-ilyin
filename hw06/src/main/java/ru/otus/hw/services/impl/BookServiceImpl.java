@@ -38,27 +38,37 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public Book insert(String title, long authorId, long genreId) {
-        return save(0, title, authorId, genreId);
+
+        var author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new EntityNotFoundException("Author with id %d not found".formatted(authorId)));
+        var genre = genreRepository.findById(genreId)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id %d not found".formatted(genreId)));
+        var book = new Book(0, title, author, genre);
+
+        return bookRepository.saveOrUpdate(book);
     }
 
     @Transactional
     @Override
     public Book update(long id, String title, long authorId, long genreId) {
-        return save(id, title, authorId, genreId);
+
+        var book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
+        var author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new EntityNotFoundException("Author with id %d not found".formatted(authorId)));
+        var genre = genreRepository.findById(genreId)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id %d not found".formatted(genreId)));
+
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setGenre(genre);
+
+        return bookRepository.saveOrUpdate(book);
     }
 
     @Override
     @Transactional
     public void deleteById(long id) {
         bookRepository.deleteById(id);
-    }
-
-    private Book save(long id, String title, long authorId, long genreId) {
-        var author = authorRepository.findById(authorId)
-                .orElseThrow(() -> new EntityNotFoundException("Author with id %d not found".formatted(authorId)));
-        var genre = genreRepository.findById(genreId)
-                .orElseThrow(() -> new EntityNotFoundException("Genre with id %d not found".formatted(genreId)));
-        var book = new Book(id, title, author, genre);
-        return bookRepository.saveAndUpdate(book);
     }
 }
