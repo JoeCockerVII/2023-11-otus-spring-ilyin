@@ -10,7 +10,7 @@ public interface BookRepository {
 
     List<Book> findAll();
 
-    Book save(Book book);
+    Book saveAndUpdate(Book book);
 
     void deleteById(long id);
 }
