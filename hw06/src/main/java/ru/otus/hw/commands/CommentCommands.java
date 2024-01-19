@@ -33,7 +33,7 @@ public class CommentCommands {
 
     @ShellMethod(value = "Insert comment", key = "cins")
     public String insertComment(@ShellOption("text") String text, @ShellOption("bookId") long bookId) {
-        var comment = commentService.insert(text, bookId);
+        var comment = commentService.create(text, bookId);
         return commentConverter.commentToString(comment);
     }
 

@@ -39,7 +39,9 @@ class JpaAuthorRepositoryTest {
     void shouldGetAllAuthors() {
         var actualAuthors = authorRepository.findAll();
         var expectedAuthors = dbAuthors;
-        assertThat(actualAuthors).containsExactlyElementsOf(expectedAuthors);
+        assertThat(actualAuthors)
+                .usingRecursiveComparison()
+                .isEqualTo(expectedAuthors);
     }
 
     @DisplayName("Book by id")
@@ -47,12 +49,16 @@ class JpaAuthorRepositoryTest {
     @MethodSource("getDbAuthors")
     void shouldGetAuthorById(Author expectedAuthor) {
         var actualAuthor = authorRepository.findById(expectedAuthor.getId());
-        assertThat(actualAuthor).isPresent().get().isEqualTo(expectedAuthor);
+        assertThat(actualAuthor)
+                .isPresent()
+                .get()
+                .usingRecursiveComparison()
+                .isEqualTo(expectedAuthor);
     }
 
     private static List<Author> getDbAuthors() {
         return IntStream.range(1, 4).boxed()
-                .map(id -> new Author(id, "Author_" + id))
+                .map(id -> new Author(id.longValue(), "Author_" + id))
                 .toList();
     }
 }

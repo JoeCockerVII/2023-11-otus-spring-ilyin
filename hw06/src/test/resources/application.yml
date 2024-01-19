@@ -1,15 +1,15 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:maindb
 
   jpa:
-#    generate-ddl: false
-    generate-ddl: true
+#    generate-ddl: true
     hibernate:
       ddl-auto: none
 #      ddl-auto: create-drop
 
-    show-sql: true
+#    show-sql: true
+
 logging:
   level:
     ROOT: ERROR

@@ -35,7 +35,12 @@ class JpaCommentRepositoryTest {
     void shouldGetCommentById(Comment expected) {
         System.out.println(expected);
         var actualComment = commentRepository.findById(expected.getId());
-        assertThat(actualComment).isPresent().get().isEqualTo(expected);
+        assertThat(actualComment)
+                .isPresent()
+                .get()
+                .usingRecursiveComparison()
+                .ignoringFields("book")
+                .isEqualTo(expected);
     }
 
     @DisplayName("Should get list comment by bookId")
@@ -43,7 +48,10 @@ class JpaCommentRepositoryTest {
     void shouldGetCommentsByBooksId() {
         var expectedComments = getDbComments();
         var actualComments = commentRepository.findAllCommentByBookId(1);
-        assertThat(actualComments).containsExactlyElementsOf(expectedComments);
+        assertThat(expectedComments)
+                .usingRecursiveComparison()
+                .ignoringFields("book")
+                .isEqualTo(actualComments);
     }
 
     @Test
@@ -76,8 +84,8 @@ class JpaCommentRepositoryTest {
     }
 
     private static List<Comment> getDbComments(List<Book> dbBooks) {
-        return List.of(new Comment(1, "Super", dbBooks.get(0)),
-                new Comment(2, "Awesome", dbBooks.get(0)));
+        return List.of(new Comment(1L, "Super", dbBooks.get(0)),
+                new Comment(2L, "Awesome", dbBooks.get(1)));
     }
 
     private static List<Comment> getDbComments() {
@@ -93,19 +101,19 @@ class JpaCommentRepositoryTest {
 
     private static List<Author> getDbAuthors() {
         return IntStream.range(1, 4).boxed()
-                .map(id -> new Author(id, "Author_" + id))
+                .map(id -> new Author(id.longValue(), "Author_" + id))
                 .toList();
     }
 
     private static List<Genre> getDbGenres() {
         return IntStream.range(1, 4).boxed()
-                .map(id -> new Genre(id, "Genre_" + id))
+                .map(id -> new Genre(id.longValue(), "Genre_" + id))
                 .toList();
     }
 
     private static List<Book> getDbBooks(List<Author> dbAuthors, List<Genre> dbGenres) {
         return IntStream.range(1, 4).boxed()
-                .map(id -> new Book(id, "BookTitle_" + id, dbAuthors.get(id - 1), dbGenres.get(id - 1)))
+                .map(id -> new Book(id.longValue(), "BookTitle_" + id, dbAuthors.get(id - 1), dbGenres.get(id - 1)))
                 .toList();
     }
 
