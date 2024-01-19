@@ -39,7 +39,7 @@ public class JpaCommentRepository implements CommentRepository {
 
     @Override
     public Comment saveOrUpdate(Comment comment) {
-        if (comment.getId() == 0) {
+        if (comment.getId() == null) {
             em.persist(comment);
             return comment;
         }
