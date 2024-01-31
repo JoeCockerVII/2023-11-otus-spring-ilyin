@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 @Setter
 @Getter
@@ -15,8 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "comments")
 public class Comment {
     @Id
-    @Field(name = "comment_id")
-    private Long id;
+    private String id;
 
     private String text;
 

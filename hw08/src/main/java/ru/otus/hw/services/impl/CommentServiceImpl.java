@@ -2,7 +2,6 @@ package ru.otus.hw.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.exceptions.EntityNotFoundException;
 import ru.otus.hw.models.Comment;
 import ru.otus.hw.repositories.BookRepository;
@@ -20,39 +19,36 @@ public class CommentServiceImpl implements CommentService {
 
     private final BookRepository bookRepository;
 
-    @Transactional(readOnly = true)
     @Override
-    public Optional<Comment> findById(long id) {
+    public Optional<Comment> findById(String id) {
         return commentRepository.findById(id);
     }
 
-    @Transactional(readOnly = true)
+
     @Override
-    public List<Comment> findByBookId(long bookId) {
+    public List<Comment> findByBookId(String bookId) {
         return commentRepository.findCommentsByBookId(bookId);
     }
 
     @Override
-    @Transactional
-    public Comment create(String text, long bookId) {
+
+    public Comment create(String text, String bookId) {
         var book = bookRepository.findById(bookId).orElseThrow(() ->
-                new EntityNotFoundException("Book with id = %d not found".formatted(bookId)));
-        var comment = new Comment(0L, text, book);
+                new EntityNotFoundException("Book with id = %s not found".formatted(bookId)));
+        var comment = new Comment(text, book);
         return commentRepository.save(comment);
     }
 
     @Override
-    @Transactional
-    public Comment update(long id, String text, long bookId) {
+    public Comment update(String id, String text, String bookId) {
         var comment = commentRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("Comment with id = %d not found".formatted(id)));
+                new EntityNotFoundException("Comment with id = %s not found".formatted(id)));
         comment.setText(text);
         return commentRepository.save(comment);
     }
 
-    @Transactional
     @Override
-    public void deleteById(long id) {
+    public void deleteById(String id) {
         commentRepository.deleteById(id);
     }
 

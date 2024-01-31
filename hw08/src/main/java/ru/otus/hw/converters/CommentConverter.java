@@ -11,7 +11,7 @@ import ru.otus.hw.models.Comment;
 public class CommentConverter {
 
         public String commentToString(Comment comment) {
-            return "Id: %d, text: %s, bookId: {%s}".formatted(
+            return "Id: %s, text: %s, bookId: {%s}".formatted(
                     comment.getId(),
                     comment.getText(),
                     comment.getBook().getId()

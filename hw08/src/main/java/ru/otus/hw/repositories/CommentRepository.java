@@ -5,8 +5,8 @@ import ru.otus.hw.models.Comment;
 
 import java.util.List;
 
-public interface CommentRepository extends MongoRepository<Comment, Long> {
+public interface CommentRepository extends MongoRepository<Comment, String> {
 
-    List<Comment> findCommentsByBookId(long bookId);
+    List<Comment> findCommentsByBookId(String bookId);
 
 }
