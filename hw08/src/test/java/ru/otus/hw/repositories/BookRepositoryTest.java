@@ -68,7 +68,7 @@ public class BookRepositoryTest {
     @DisplayName("должен сохранять измененную книгу")
     @Test
     void shouldSaveUpdatedBook() {
-        
+
         var expectedBook = new Book("1", "BookTitle_10500", author, genre);
         bookRepository.save(expectedBook);
 
