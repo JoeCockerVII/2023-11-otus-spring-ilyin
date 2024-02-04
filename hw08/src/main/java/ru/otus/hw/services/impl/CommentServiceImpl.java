@@ -40,7 +40,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment update(String id, String text, String bookId) {
+    public Comment update(String id, String text) {
         var comment = commentRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("Comment with id = %s not found".formatted(id)));
         comment.setText(text);
