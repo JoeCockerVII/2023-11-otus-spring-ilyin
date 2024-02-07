@@ -20,6 +20,6 @@ public class MongoBookCascadeDeleteEventsListener extends AbstractMongoEventList
         val source = event.getSource();
         val id = source.get("_id").toString();
         commentRepository.findCommentsByBookId(id)
-                .forEach(comment -> commentRepository.deleteById(comment.getId()));
+                .forEach(comment -> commentRepository.deleteByBookId(id));
     }
 }
