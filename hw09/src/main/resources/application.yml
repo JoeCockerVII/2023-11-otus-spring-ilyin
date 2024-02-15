@@ -5,7 +5,7 @@ server:
     include-binding-errors: always
   servlet:
     context-path: /api/v1.0
-  port: 8081
+  port: 8085
 
 spring:
   datasource:
@@ -15,8 +15,6 @@ spring:
   sql:
     init:
       mode: always
-      data-locations: data.sql
-      schema-locations: schema.sql
 
   h2:
     console:
