@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,7 +60,7 @@ public class BookController {
         List<Author> authors = authorService.findAll();
         List<Genre> genres = genreService.findAll();
 
-        model.addAttribute("book", book);
+        model.addAttribute("book", BookCreateDto.toDto(book));
         model.addAttribute("authors", authors);
         model.addAttribute("genres", genres);
 
@@ -74,20 +75,24 @@ public class BookController {
     }
 
 
-
     @PostMapping("/create")
-    public String saveBook(@Valid @ModelAttribute("book") BookCreateDto dto) {
+    public String saveBook(@Valid @ModelAttribute("book") BookCreateDto dto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "create";
+        }
 
-        bookService.create(dto.getTitle(),dto.getAuthorId(),dto.getGenreId());
+        bookService.create(dto);
 
         return "redirect:/";
     }
 
 
     @PostMapping("/edit")
-    public String editBook(@Valid @ModelAttribute("book") BookUpdateDto dto, Model model) {
-
-        bookService.update(dto.getId(),dto.getTitle(),dto.getAuthor().getId(),dto.getGenre().getId());
+    public String editBook(@Valid @ModelAttribute("book") BookUpdateDto dto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
+        bookService.update(dto);
 
         return "redirect:/";
     }

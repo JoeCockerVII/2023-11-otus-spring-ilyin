@@ -39,7 +39,7 @@
     </div>
 
     <div class="row">
-        <select id="genreId" th:field="${book.genre.id}">
+        <select id="genreId" th:field="${book.genreId}">
             <option th:each="genre : ${genres}"
                     th:value="${genre.id}"
                     th:text="${genre.name}">
@@ -48,7 +48,7 @@
     </div>
 
     <div class="row">
-        <select id="authorId" th:field="${book.author.id}">
+        <select id="authorId" th:field="${book.authorId}">
             <option th:each="author : ${authors}"
                     th:value="${author.id}"
                     th:text="${author.fullName}">
