@@ -5,7 +5,7 @@ server:
     include-binding-errors: always
   servlet:
     context-path: /api/v1.0
-  port: 8085
+  port: 8090
 
 spring:
   datasource:

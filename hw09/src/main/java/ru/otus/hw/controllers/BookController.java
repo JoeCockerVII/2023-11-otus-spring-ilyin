@@ -60,7 +60,7 @@ public class BookController {
         List<Author> authors = authorService.findAll();
         List<Genre> genres = genreService.findAll();
 
-        model.addAttribute("book", BookCreateDto.toDto(book));
+        model.addAttribute("book", BookUpdateDto.toDto(book));
         model.addAttribute("authors", authors);
         model.addAttribute("genres", genres);
 
