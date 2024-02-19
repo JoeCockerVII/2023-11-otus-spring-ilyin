@@ -3,7 +3,7 @@ package ru.otus.hw.services.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.hw.exceptions.EntityNotFoundException;
+import ru.otus.hw.exceptions.NotFoundException;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.models.dto.BookCreateDto;
 import ru.otus.hw.models.dto.BookUpdateDto;
@@ -41,10 +41,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book create(BookCreateDto dto) {
 
-        var author = authorRepository.findById(dto.getAuthorId())
-                .orElseThrow(() -> new EntityNotFoundException("Author id %d not found".formatted(dto.getAuthorId())));
-        var genre = genreRepository.findById(dto.getGenreId())
-                .orElseThrow(() -> new EntityNotFoundException("Genre id %d not found".formatted(dto.getGenreId())));
+        var author = authorRepository.findById(dto.getAuthorId()).orElseThrow(NotFoundException::new);
+        var genre = genreRepository.findById(dto.getGenreId()).orElseThrow(NotFoundException::new);
         var book = new Book(0L, dto.getTitle(), author, genre);
 
         return bookRepository.save(book);
@@ -54,12 +52,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book update(BookUpdateDto dto) {
 
-        var book = bookRepository.findById(dto.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Book id %d not found".formatted(dto.getId())));
-        var author = authorRepository.findById(dto.getAuthorId())
-                .orElseThrow(() -> new EntityNotFoundException("Author id %d not found".formatted(dto.getAuthorId())));
-        var genre = genreRepository.findById(dto.getGenreId())
-                .orElseThrow(() -> new EntityNotFoundException("Genre id %d not found".formatted(dto.getGenreId())));
+        var book = bookRepository.findById(dto.getId()).orElseThrow(NotFoundException::new);
+        var author = authorRepository.findById(dto.getAuthorId()).orElseThrow(NotFoundException::new);
+        var genre = genreRepository.findById(dto.getGenreId()).orElseThrow(NotFoundException::new);
 
         book.setTitle(dto.getTitle());
         book.setAuthor(author);

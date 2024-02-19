@@ -29,7 +29,7 @@
 </head>
 <body>
 <h3>Create Book</h3>
-<form id="create-form" action="create.html"  th:action="@{/create(id=${book.id})}" th:method="post" th:object="${book}">
+<form id="create-form" action="create.html"  th:action="@{/create}" th:method="post" th:object="${book}">
 
     <div class="row">
         <label for="book-input-save">Title:</label>
