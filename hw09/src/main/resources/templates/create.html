@@ -34,6 +34,7 @@
     <div class="row">
         <label for="book-input-save">Title:</label>
         <input id="book-input-save" name="title" type="text" th:value="*{title}"/>
+        <div class="errors" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
     </div>
 
     <div class="row">

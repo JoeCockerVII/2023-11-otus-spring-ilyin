@@ -7,10 +7,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.models.Author;
-import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Genre;
+import ru.otus.hw.models.dto.BookDto;
 import ru.otus.hw.services.AuthorService;
 import ru.otus.hw.services.BookService;
+import ru.otus.hw.services.CommentService;
 import ru.otus.hw.services.GenreService;
 
 import java.util.List;
@@ -34,6 +35,9 @@ public class BookControllerTest {
     private AuthorService authorService;
     @MockBean
     private GenreService genreService;
+
+    @MockBean
+    private CommentService commentService;
 
     @Test
     @DisplayName("Should get all books")
@@ -77,11 +81,36 @@ public class BookControllerTest {
     @DisplayName("Should delete book")
     void shouldCorrectDeletePerson() throws Exception {
         long id = 1L;
-        mockMvc.perform(post("/delete/{id}", id))
+        mockMvc.perform(delete("/delete/{id}", id))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
         verify(bookService).deleteById(id);
     }
+
+    @Test
+    @DisplayName("Should redirect when empty title")
+    void shouldRedirectWhenEmptyTitle() throws Exception {
+        mockMvc.perform(post("/edit")
+                        .param("title","")
+                        .param("id", String.valueOf(getDbBooks().get(0).getId()))
+                        .param("authorId", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
+                        .param("genreId", String.valueOf(getDbBooks().get(0).getGenre().getId())))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+    }
+
+    @Test
+    @DisplayName("Should redirect when incorrect id")
+    void shouldRedirectWhenIncorrectId() throws Exception {
+        mockMvc.perform(post("/edit")
+                        .param("title", getDbBooks().get(0).getTitle())
+                        .param("id", "")
+                        .param("authorId", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
+                        .param("genreId", String.valueOf(getDbBooks().get(0).getGenre().getId())))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+    }
+
 
     private static List<Author> getDbAuthors() {
         return IntStream.range(1, 4).boxed()
@@ -95,13 +124,13 @@ public class BookControllerTest {
                 .toList();
     }
 
-    private static List<Book> getDbBooks(List<Author> dbAuthors, List<Genre> dbGenres) {
+    private static List<BookDto> getDbBooks(List<Author> dbAuthors, List<Genre> dbGenres) {
         return IntStream.range(1, 4).boxed()
-                .map(id -> new Book(id.longValue(), "BookTitle_" + id, dbAuthors.get(id - 1), dbGenres.get(id - 1)))
+                .map(id -> new BookDto(id.longValue(), "BookTitle_" + id, dbAuthors.get(id - 1), dbGenres.get(id - 1)))
                 .toList();
     }
 
-    private static List<Book> getDbBooks() {
+    private static List<BookDto> getDbBooks() {
         var dbAuthors = getDbAuthors();
         var dbGenres = getDbGenres();
         return getDbBooks(dbAuthors, dbGenres);

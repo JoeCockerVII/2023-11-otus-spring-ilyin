@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.otus.hw.models.Book;
 
 @Data
 @AllArgsConstructor
@@ -24,13 +23,5 @@ public class BookCreateDto {
 
     @NotNull
     private Long genreId;
-
-    public static BookCreateDto toDto(Book dto) {
-        return BookCreateDto.builder()
-                .title(dto.getTitle())
-                .authorId(dto.getAuthor().getId())
-                .genreId(dto.getGenre().getId())
-                .build();
-    }
 
 }

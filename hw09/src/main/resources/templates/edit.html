@@ -36,10 +36,11 @@
     <div class="row">
         <label for="book-name-input" >Title:</label>
         <input id="book-name-input" name="title" type="text" th:value="*{title}"/>
+        <div class="errors" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
     </div>
 
     <div class="row">
-        <select id="genreId" th:field="${book.genreId}">
+        <select id="genreId" th:field="${book.genre.id}">
             <option th:each="genre : ${genres}"
                     th:value="${genre.id}"
                     th:text="${genre.name}">
@@ -48,7 +49,7 @@
     </div>
 
     <div class="row">
-        <select id="authorId" th:field="${book.authorId}">
+        <select id="authorId" th:field="${book.author.id}">
             <option th:each="author : ${authors}"
                     th:value="${author.id}"
                     th:text="${author.fullName}">

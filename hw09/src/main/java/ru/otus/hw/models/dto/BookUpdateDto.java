@@ -8,7 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.otus.hw.models.Book;
+import ru.otus.hw.models.Author;
+import ru.otus.hw.models.Genre;
 
 @Data
 @Builder
@@ -24,18 +25,8 @@ public class BookUpdateDto {
     private String title;
 
     @NotNull
-    private Long authorId;
+    private Author author;
 
     @NotNull
-    private Long genreId;
-
-    public static BookUpdateDto toDto(Book dto) {
-        return BookUpdateDto.builder()
-                .id(dto.getId())
-                .title(dto.getTitle())
-                .authorId(dto.getAuthor().getId())
-                .genreId(dto.getGenre().getId())
-                .build();
-    }
-
+    private Genre genre;
 }

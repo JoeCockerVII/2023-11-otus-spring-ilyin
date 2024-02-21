@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
-import ru.otus.hw.exceptions.NotFoundException;
-import ru.otus.hw.models.Author;
-import ru.otus.hw.models.Book;
-import ru.otus.hw.models.Genre;
+import ru.otus.hw.models.dto.AuthorDto;
 import ru.otus.hw.models.dto.BookCreateDto;
 import ru.otus.hw.models.dto.BookUpdateDto;
+import ru.otus.hw.models.dto.GenreDto;
 import ru.otus.hw.services.AuthorService;
 import ru.otus.hw.services.BookService;
 import ru.otus.hw.services.GenreService;
@@ -56,12 +54,12 @@ public class BookController {
     @GetMapping("/edit")
     public String editPage(@RequestParam("id") long id, Model model) {
 
-        Book book = bookService.findById(id).orElseThrow(NotFoundException::new);
+        var book = bookService.findById(id);
 
-        List<Author> authors = authorService.findAll();
-        List<Genre> genres = genreService.findAll();
+        List<AuthorDto> authors = authorService.findAll();
+        List<GenreDto> genres = genreService.findAll();
 
-        model.addAttribute("book", BookUpdateDto.toDto(book));
+        model.addAttribute("book", book);
         model.addAttribute("authors", authors);
         model.addAttribute("genres", genres);
 
@@ -70,7 +68,7 @@ public class BookController {
 
     @GetMapping("/delete/{id}")
     public String deletePage(@PathVariable Long id, Model model) {
-        var book = bookService.findById(id).orElseThrow(NotFoundException::new);
+        var book = bookService.findById(id);
         model.addAttribute("book", book);
         return "delete";
     }
@@ -79,7 +77,7 @@ public class BookController {
     @PostMapping("/create")
     public String saveBook(@Valid @ModelAttribute("book") BookCreateDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "create";
+            return "redirect:/";
         }
 
         bookService.create(dto);
@@ -91,7 +89,7 @@ public class BookController {
     @PostMapping("/edit")
     public String editBook(@Valid @ModelAttribute("book") BookUpdateDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "edit";
+            return "redirect:/";
         }
         bookService.update(dto);
 
