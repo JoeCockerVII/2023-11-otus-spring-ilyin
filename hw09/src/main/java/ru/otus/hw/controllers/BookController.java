@@ -41,12 +41,9 @@ public class BookController {
     @GetMapping("/create")
     public String createPage(Model model) {
 
-        var authors = authorService.findAll();
-        var genres = genreService.findAll();
-
         model.addAttribute("book", new BookCreateDto());
-        model.addAttribute("authors", authors);
-        model.addAttribute("genres", genres);
+        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("genres", genreService.findAll());
 
         return "create";
     }
@@ -54,14 +51,9 @@ public class BookController {
     @GetMapping("/edit")
     public String editPage(@RequestParam("id") long id, Model model) {
 
-        var book = bookService.findById(id);
-
-        List<AuthorDto> authors = authorService.findAll();
-        List<GenreDto> genres = genreService.findAll();
-
-        model.addAttribute("book", book);
-        model.addAttribute("authors", authors);
-        model.addAttribute("genres", genres);
+        model.addAttribute("book", bookService.findById(id));
+        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("genres", genreService.findAll());
 
         return "edit";
     }
@@ -75,9 +67,11 @@ public class BookController {
 
 
     @PostMapping("/create")
-    public String saveBook(@Valid @ModelAttribute("book") BookCreateDto dto, BindingResult bindingResult) {
+    public String saveBook(@Valid @ModelAttribute("book") BookCreateDto dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/";
+            model.addAttribute("authors", authorService.findAll());
+            model.addAttribute("genres", genreService.findAll());
+            return "create";
         }
 
         bookService.create(dto);
@@ -87,9 +81,14 @@ public class BookController {
 
 
     @PostMapping("/edit")
-    public String editBook(@Valid @ModelAttribute("book") BookUpdateDto dto, BindingResult bindingResult) {
+    public String editBook(@Valid @ModelAttribute("book") BookUpdateDto dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "redirect:/";
+            var authors = authorService.findAll();
+            var genres = genreService.findAll();
+
+            model.addAttribute("authors", authors);
+            model.addAttribute("genres", genres);
+            return "edit";
         }
         bookService.update(dto);
 

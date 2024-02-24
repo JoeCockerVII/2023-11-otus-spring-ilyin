@@ -71,8 +71,11 @@ public class BookControllerTest {
         mockMvc.perform(post("/edit")
                         .param("title", getDbBooks().get(0).getTitle())
                         .param("id", String.valueOf(getDbBooks().get(0).getId()))
-                        .param("authorId", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
-                        .param("genreId", String.valueOf(getDbBooks().get(0).getGenre().getId())))
+                        .param("author.id", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
+                        .param("author.fullName", String.valueOf(getDbBooks().get(0).getAuthor().getFullName()))
+                        .param("genre.id", String.valueOf(getDbBooks().get(0).getGenre().getId()))
+                        .param("genre.name", String.valueOf(getDbBooks().get(0).getGenre().getName()))
+                )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));
     }
@@ -93,10 +96,12 @@ public class BookControllerTest {
         mockMvc.perform(post("/edit")
                         .param("title","")
                         .param("id", String.valueOf(getDbBooks().get(0).getId()))
-                        .param("authorId", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
-                        .param("genreId", String.valueOf(getDbBooks().get(0).getGenre().getId())))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
+                        .param("author.id", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
+                        .param("author.fullName", String.valueOf(getDbBooks().get(0).getAuthor().getFullName()))
+                        .param("genre.id", String.valueOf(getDbBooks().get(0).getGenre().getId()))
+                        .param("genre.name", String.valueOf(getDbBooks().get(0).getGenre().getName()))
+                )
+                .andExpect(view().name("edit"));
     }
 
     @Test
@@ -105,10 +110,12 @@ public class BookControllerTest {
         mockMvc.perform(post("/edit")
                         .param("title", getDbBooks().get(0).getTitle())
                         .param("id", "")
-                        .param("authorId", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
-                        .param("genreId", String.valueOf(getDbBooks().get(0).getGenre().getId())))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
+                        .param("author.id", String.valueOf(getDbBooks().get(0).getAuthor().getId()))
+                        .param("author.fullName", String.valueOf(getDbBooks().get(0).getAuthor().getFullName()))
+                        .param("genre.id", String.valueOf(getDbBooks().get(0).getGenre().getId()))
+                        .param("genre.name", String.valueOf(getDbBooks().get(0).getGenre().getName()))
+                )
+                .andExpect(view().name("edit"));
     }
 
 
