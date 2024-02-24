@@ -10,7 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hw02</artifactId>
+    <description>hw01-spring-xml-config</description>
+
+    <artifactId>hw01-spring-xml-config</artifactId>
 
     <properties>
         <maven.compiler.target>17</maven.compiler.target>

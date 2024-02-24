@@ -10,7 +10,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hw01</artifactId>
+    <description>hw02-spring-annotation-config</description>
+
+    <artifactId>hw02-spring-annotation-config</artifactId>
 
     <properties>
         <maven.compiler.target>17</maven.compiler.target>
