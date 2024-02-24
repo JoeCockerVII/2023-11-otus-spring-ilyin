@@ -9,14 +9,15 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>hw01</module>
-        <module>hw02</module>
-        <module>hw03</module>
-        <module>hw04</module>
-        <module>hw05</module>
-        <module>hw06</module>
-        <module>hw07</module>
-        <module>hw08</module>
+        <module>hw01-spring-xml-config</module>
+        <module>hw02-spring-annotation-config</module>
+        <module>hw03-springBoot</module>
+        <module>hw04-spring-shell</module>
+        <module>hw05-spring-jdbc</module>
+        <module>hw06-spring-orm</module>
+        <module>hw07-spring-data-jpa</module>
+        <module>hw08-mongo-db</module>
+        <module>hw09-spring-mvc-view</module>
     </modules>
 
     <properties>

@@ -3,11 +3,12 @@
 ## Репозиторий: 2023-11-otus-spring-ilyin
 
 ## Материалы репозитория
-1. [Введение в Spring Framework: Test Quiz](hw01)
-2. [Конфигурирование Spring-приложений : Test Quiz](hw02)
-3. [Перенести приложение для тестирования студентов на Spring Boot](hw03)
-4. [Перевести приложение для проведения опросов на Spring Shell](hw04)
-5. [Создать приложение, каталог книг в библиотеке](hw05)
-6. [Переписать приложение для хранения книг на ORM](hw06)
-7. [Переписать библиотеку на Spring Data JPA](hw07)
-8. [Использовать MongoDB и spring-data для хранения информации о книгах](hw08)
+1. [Введение в Spring Framework: Test Quiz](hw01-spring-xml-config)
+2. [Конфигурирование Spring-приложений : Test Quiz](hw02-spring-annotation-config)
+3. [Перенести приложение для тестирования студентов на Spring Boot](hw03-springBoot)
+4. [Перевести приложение для проведения опросов на Spring Shell](hw04-spring-shell)
+5. [Создать приложение, каталог книг в библиотеке](hw05-spring-jdbc)
+6. [Переписать приложение для хранения книг на ORM](hw06-spring-orm)
+7. [Переписать библиотеку на Spring Data JPA](hw07-spring-data-jpa)
+8. [Использовать MongoDB и spring-data для хранения информации о книгах](hw08-mongo-db)
+9. [CRUD приложение с Web UI и хранением данных в БД](hw09-spring-mvc-view)
