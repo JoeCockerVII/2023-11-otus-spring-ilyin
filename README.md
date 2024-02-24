@@ -12,3 +12,4 @@
 7. [Переписать библиотеку на Spring Data JPA](hw07-spring-data-jpa)
 8. [Использовать MongoDB и spring-data для хранения информации о книгах](hw08-mongo-db)
 9. [CRUD приложение с Web UI и хранением данных в БД](hw09-spring-mvc-view)
+10. [Переписать приложение с использованием AJAX и REST-контроллеров](hw10-spring-mvc-ajax)

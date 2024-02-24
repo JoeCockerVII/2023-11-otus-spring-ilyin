@@ -18,6 +18,7 @@
         <module>hw07-spring-data-jpa</module>
         <module>hw08-mongo-db</module>
         <module>hw09-spring-mvc-view</module>
+        <module>hw10-spring-mvc-ajax</module>
     </modules>
 
     <properties>
