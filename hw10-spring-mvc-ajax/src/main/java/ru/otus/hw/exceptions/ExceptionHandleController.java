@@ -1,11 +1,11 @@
 package ru.otus.hw.exceptions;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ExceptionHandleController {
 
     @ExceptionHandler(NotFoundException.class)

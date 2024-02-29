@@ -62,8 +62,8 @@ public class BookServiceImpl implements BookService {
     public BookDto update(BookUpdateDto dto) {
 
         var book = bookRepository.findById(dto.getId()).orElseThrow(NotFoundException::new);
-        var author = authorRepository.findById(dto.getAuthor().getId()).orElseThrow(NotFoundException::new);
-        var genre = genreRepository.findById(dto.getGenre().getId()).orElseThrow(NotFoundException::new);
+        var author = authorRepository.findById(dto.getAuthorId()).orElseThrow(NotFoundException::new);
+        var genre = genreRepository.findById(dto.getGenreId()).orElseThrow(NotFoundException::new);
 
         book.setTitle(dto.getTitle());
         book.setAuthor(author);

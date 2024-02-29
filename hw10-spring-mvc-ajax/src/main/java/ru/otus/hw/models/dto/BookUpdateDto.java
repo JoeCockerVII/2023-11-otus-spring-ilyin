@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.otus.hw.models.Author;
-import ru.otus.hw.models.Genre;
 
 @Data
 @Builder
@@ -25,8 +23,8 @@ public class BookUpdateDto {
     private String title;
 
     @NotNull
-    private Author author;
+    private Long authorId;
 
     @NotNull
-    private Genre genre;
+    private Long genreId;
 }

@@ -9,7 +9,7 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 
-		System.out.printf("Application address: %n%s%n", "http://localhost:8090/api/v1.0");
+		System.out.printf("Application address: %n%s%n", "http://localhost:8090");
 	}
 
 }

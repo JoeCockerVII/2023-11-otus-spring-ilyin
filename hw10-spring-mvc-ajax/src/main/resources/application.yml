@@ -3,8 +3,6 @@ server:
     include-message: always
     include-exception: true
     include-binding-errors: always
-  servlet:
-    context-path: /api/v1.0
   port: 8090
 
 spring:
