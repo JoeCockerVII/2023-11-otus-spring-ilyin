@@ -2,6 +2,7 @@ package ru.otus.hw.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.otus.hw.models.dto.BookCreateDto;
 import ru.otus.hw.models.dto.BookDto;
 import ru.otus.hw.models.dto.BookUpdateDto;
@@ -28,6 +30,7 @@ public class BookController {
     }
 
     @PostMapping("/books")
+    @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@Valid @RequestBody BookCreateDto bookCreateDto) {
         return bookService.create(bookCreateDto);
     }
@@ -39,6 +42,7 @@ public class BookController {
     }
 
     @DeleteMapping("/books/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable("id") long id) {
         bookService.deleteById(id);
     }

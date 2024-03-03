@@ -57,7 +57,7 @@ class BookControllerTest {
         mvc.perform(post("/books")
                         .contentType(APPLICATION_JSON)
                         .content(expected))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
 
         verify(bookService).create(book);
     }
@@ -81,7 +81,7 @@ class BookControllerTest {
     @DisplayName("Should delete book")
     void shouldDeleteBook() throws Exception {
         mvc.perform(delete("/books/1"))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
         verify(bookService, times(1)).deleteById(1L);
     }
 

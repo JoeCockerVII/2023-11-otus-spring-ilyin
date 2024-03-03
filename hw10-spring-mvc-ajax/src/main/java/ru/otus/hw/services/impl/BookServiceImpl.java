@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.hw.exceptions.NotFoundException;
-import ru.otus.hw.models.Book;
 import ru.otus.hw.models.dto.BookCreateDto;
 import ru.otus.hw.models.dto.BookDto;
 import ru.otus.hw.models.dto.BookUpdateDto;
@@ -52,7 +51,7 @@ public class BookServiceImpl implements BookService {
 
         var author = authorRepository.findById(dto.getAuthorId()).orElseThrow(NotFoundException::new);
         var genre = genreRepository.findById(dto.getGenreId()).orElseThrow(NotFoundException::new);
-        var book = new Book(0L, dto.getTitle(), author, genre);
+        var book = mapper.toModel(dto,author,genre);
 
         return mapper.toDto(bookRepository.save(book));
     }

@@ -46,7 +46,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public CommentDto create(CommentCreateDto dto) {
         var book = bookRepository.findById(dto.getBookId()).orElseThrow(NotFoundException::new);
-        var comment = new Comment(0L, dto.getText(), book);
+        var comment = new Comment(null, dto.getText(), book);
         return mapper.toDto(commentRepository.save(comment));
     }
 
