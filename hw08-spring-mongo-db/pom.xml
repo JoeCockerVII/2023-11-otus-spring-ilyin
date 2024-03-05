@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
 
-    <description>hw08-mongo-db</description>
+    <description>hw08-spring-mongo-db</description>
 
-    <artifactId>hw08-mongo-db</artifactId>
+    <artifactId>hw08-spring-mongo-db</artifactId>
 
     <properties>
         <maven.compiler.target>17</maven.compiler.target>

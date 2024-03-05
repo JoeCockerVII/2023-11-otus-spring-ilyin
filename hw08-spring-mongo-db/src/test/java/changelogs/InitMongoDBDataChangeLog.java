@@ -1,4 +1,4 @@
-package ru.otus.hw.changelogs;
+package changelogs;
 
 import com.github.cloudyrock.mongock.ChangeLog;
 import com.github.cloudyrock.mongock.ChangeSet;
@@ -50,7 +50,7 @@ public class InitMongoDBDataChangeLog {
         books.add(bookRepository.save(new Book("Book_3", authors.get(2), genres.get(2))));
     }
 
-    @ChangeSet(order = "004", id = "initComments", author = "yan", runAlways = true)
+    @ChangeSet(order = "004", id = "initComments", author = "VII", runAlways = true)
     public void initComments(CommentRepository commentRepository) {
         commentRepository.save(new Comment("Comment_1", books.get(0)));
         commentRepository.save(new Comment("Comment_2", books.get(1)));
