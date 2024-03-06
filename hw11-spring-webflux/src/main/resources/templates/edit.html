@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>Edit Book</h1>
+<form id="edit-form" action="edit.html" >
+
+    <div class="row">
+        <label for="book-id-input">ID:</label>
+        <input id="book-id-input" type="text" readonly="readonly" name="id" th:value="${id}" value=""/>
+    </div>
+
+    <div class="row">
+        <label for="book-title-input">Title:</label>
+        <input id="book-title-input" name="title" type="text" value=""/>
+    </div>
+
+    <div class="row">
+        <label for="authorId">Author:</label>
+        <select id="authorId" name="authorId">
+            <option value="">Select Author</option>
+        </select>
+    </div>
+
+    <div class="row">
+        <label for="genreId">Genre:</label>
+        <select id="genreId" name="genreId">
+            <option value="">Select Genre</option>
+        </select>
+    </div>
+
+    <div class="row">
+        <button type="button" onclick="updateBook()">Update</button>
+        <a href="list.html" th:href="@{/}"><button type="button">Go Back</button></a>
+    </div>
+
+
+</form>
+
+<script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+<script>
+        function updateBook() {
+            const savedBookContainer = document.getElementById("edited-book")
+            const bookId = document.getElementById("book-id-input")
+            const titleInput = document.getElementById("book-title-input")
+            const authorInput = document.getElementById("authorId")
+            const genreInput = document.getElementById("genreId")
+            
+            const book = {
+                id: bookId.value,
+                title: titleInput.value,
+                authorId: authorInput.value,
+                genreId: genreInput.value
+            }
+
+            fetch("/books/" + book.id, {
+                method: 'PUT',
+                referrer: "",
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(book)})
+            .then(rawResponse => rawResponse.json())
+            .then(json => savedBookContainer.innerHTML = JSON.stringify(json, null, 4))
+        }
+</script>
+
+<script>
+    $(function () {
+        $.ajax({
+            url: "/authors",
+            type: "GET",
+            dataType: "json",
+            success: function(authors) {
+                $.each(authors, function(i, author) {
+                    $("#authorId").append("<option value='" + author.id + "'>" + author.fullName + "</option>");
+                });
+            }
+        });
+    });
+</script>
+
+
+<script>
+    $(function () {
+        $.ajax({
+            url: "/genres",
+            type: "GET",
+            dataType: "json",
+            success: function(genres) {
+                $.each(genres, function(i, genre) {
+                    $("#genreId").append("<option value='" + genre.id + "'>" + genre.name + "</option>");
+                });
+            }
+        });
+    });
+</script>
+<h3>Edited book:</h3>
+<pre id="edited-book"></pre>
+</body>
+</html>
