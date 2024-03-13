@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import ru.otus.hw.exceptions.NotFoundException;
 import ru.otus.hw.models.dto.CommentDto;
 import ru.otus.hw.models.mappers.CommentMapper;
 import ru.otus.hw.repositories.CommentRepository;
@@ -19,7 +20,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Mono<CommentDto> findById(String id) {
-        return commentRepository.findById(id).map(mapper::toDto);
+        return commentRepository.findById(id)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .map(mapper::toDto);
     }
 
     @Override

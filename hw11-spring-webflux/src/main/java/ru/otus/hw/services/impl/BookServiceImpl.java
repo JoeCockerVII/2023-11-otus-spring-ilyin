@@ -29,7 +29,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Mono<BookDto> findById(String id) {
-        return bookRepository.findById(id).map(mapper::toDto);
+        return bookRepository.findById(id)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .map(mapper::toDto);
     }
 
     @Override
@@ -72,26 +74,3 @@ public class BookServiceImpl implements BookService {
         return bookRepository.deleteById(id);
     }
 }
-
-
-
-//.flatMap(book -> {
-//        book.setTitle(dto.getTitle());
-//        book.setAuthor(author);
-//        book.setGenre(genre);
-//        return bookRepository.save(book).map(mapper::toDto);
-//        })
-
-//                            return bookRepository.findById(dto.getId())
-//                                    .switchIfEmpty(Mono.error(NotFoundException::new))
-//                                    .flatMap(book -> {
-//                                        book.setTitle(dto.getTitle());
-//                                        book.setAuthor(author);
-//                                        book.setGenre(genre);
-//                                        return bookRepository.save(book).map(mapper::toDto).hide();
-//                                    })
-//                            ;
-//                        }
-//                ).block();
-////                .flatMap(bookRepository::save)
-////                .map(mapper::toDto);

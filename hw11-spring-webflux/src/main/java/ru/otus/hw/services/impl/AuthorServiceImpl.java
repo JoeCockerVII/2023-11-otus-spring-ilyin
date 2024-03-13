@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import ru.otus.hw.exceptions.NotFoundException;
 import ru.otus.hw.models.dto.AuthorDto;
 import ru.otus.hw.models.mappers.AuthorMapper;
 import ru.otus.hw.repositories.AuthorRepository;
@@ -24,6 +25,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Mono<AuthorDto> findById(String id) {
-        return authorRepository.findById(id).map(mapper::toDto);
+        return authorRepository.findById(id)
+                .switchIfEmpty(Mono.error(NotFoundException::new))
+                .map(mapper::toDto);
     }
 }
