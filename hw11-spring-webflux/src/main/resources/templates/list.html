@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="keywords" th:content="${keywords}"/>
+    <title>List of all books</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .books {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .books tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .books td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Books:</h1>
+
+<a href = "create.html" th:href = "@{/create}">Create new book</a>
+<table class="books">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(function () {
+        $.get('/books').done(function (books) {
+            books.forEach(function (book) {
+                $('tbody').append(`
+                    <tr>
+                        <td>${book.id}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author.fullName}</td>
+                        <td>${book.genre.name}</td>
+                        <td>
+                            <a href="/edit/${book.id}">Edit</a>
+                            <button onclick="deleteBook('${book.id}')">Delete</button>
+                        </td>
+                    </tr>
+                `)
+            });
+        })
+    });
+
+    function deleteBook(id) {
+        fetch("/books/"+ id, {
+            method: "DELETE"
+        })
+        .then(() => {
+            location.reload();
+        })
+    }
+</script>
+
+</body>
+</html>

@@ -13,3 +13,4 @@
 8. [Использовать MongoDB и spring-data для хранения информации о книгах](hw08-spring-mongo-db)
 9. [CRUD приложение с Web UI и хранением данных в БД](hw09-spring-mvc-view)
 10. [Переписать приложение с использованием AJAX и REST-контроллеров](hw10-spring-mvc-ajax)
+11. [Использовать WebFlux](hw11-spring-webflux)
