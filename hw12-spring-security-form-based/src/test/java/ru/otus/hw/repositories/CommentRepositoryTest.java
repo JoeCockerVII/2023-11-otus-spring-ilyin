@@ -1,19 +1,20 @@
 package ru.otus.hw.repositories;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import ru.otus.hw.TestHelper;
 import ru.otus.hw.models.Author;
 import ru.otus.hw.models.Book;
 import ru.otus.hw.models.Comment;
 import ru.otus.hw.models.Genre;
 
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,10 +28,40 @@ class CommentRepositoryTest {
     @Autowired
     private CommentRepository commentRepository;
 
+
+    @InjectMocks
+    private TestHelper testHelper;
+
+    private List<Author> dbAuthors;
+
+    private List<Genre> dbGenres;
+
+    private List<Book> dbBooks;
+
+    @BeforeEach
+    void setUp() {
+        dbGenres = testHelper.getDbGenresDto()
+                .stream()
+                .map(testHelper.getGenreMapper()::toModel)
+                .collect(Collectors.toList());
+
+        dbAuthors = testHelper.getDbAuthorsDto()
+                .stream()
+                .map(testHelper.getAuthorMapper()::toModel)
+                .collect(Collectors.toList());
+
+        dbBooks = testHelper.getDbBooks(testHelper.getDbAuthorsDto(), testHelper.getDbGenresDto())
+                .stream()
+                .map(testHelper.getBookMapper()::toModel)
+                .collect(Collectors.toList());
+    }
+
+
+
     @DisplayName("Should get comment by id")
-    @ParameterizedTest
-    @MethodSource("getDbComments")
-    void shouldGetCommentById(Comment expected) {
+    @Test
+    void shouldGetCommentById() {
+        var expected = getDbComments(dbBooks).get(0);
         System.out.println(expected);
         var actualComment = commentRepository.findById(expected.getId());
         assertThat(actualComment)
@@ -44,7 +75,7 @@ class CommentRepositoryTest {
     @DisplayName("Should get list comment by bookId")
     @Test
     void shouldGetCommentsByBooksId() {
-        var expectedComments = getDbComments();
+        var expectedComments = getDbComments(dbBooks);
         var actualComments = commentRepository.findCommentsByBookId(1L);
         assertThat(expectedComments)
                 .usingRecursiveComparison()
@@ -62,7 +93,7 @@ class CommentRepositoryTest {
 
     @Test
     void saveOrUpdate() {
-        var expectedComment = new Comment(1L, "SomeText", getDbBooks().get(0));
+        var expectedComment = new Comment(1L, "SomeText", dbBooks.get(0));
 
         assertThat(commentRepository.findById(expectedComment.getId()))
                 .isPresent()
@@ -81,38 +112,9 @@ class CommentRepositoryTest {
                 .isEqualTo(returnedComment);
     }
 
-    private static List<Comment> getDbComments(List<Book> dbBooks) {
+    private List<Comment> getDbComments(List<Book> dbBooks) {
         return List.of(new Comment(1L, "Super", dbBooks.get(0)),
                 new Comment(2L, "Awesome", dbBooks.get(1)));
-    }
-
-    private static List<Comment> getDbComments() {
-        var dbBooks = getDbBooks();
-        return getDbComments(dbBooks);
-    }
-
-    private static List<Book> getDbBooks() {
-        var dbAuthors = getDbAuthors();
-        var dbGenres = getDbGenres();
-        return getDbBooks(dbAuthors, dbGenres);
-    }
-
-    private static List<Author> getDbAuthors() {
-        return IntStream.range(1, 4).boxed()
-                .map(id -> new Author(id.longValue(), "Author_" + id))
-                .toList();
-    }
-
-    private static List<Genre> getDbGenres() {
-        return IntStream.range(1, 4).boxed()
-                .map(id -> new Genre(id.longValue(), "Genre_" + id))
-                .toList();
-    }
-
-    private static List<Book> getDbBooks(List<Author> dbAuthors, List<Genre> dbGenres) {
-        return IntStream.range(1, 4).boxed()
-                .map(id -> new Book(id.longValue(), "BookTitle_" + id, dbAuthors.get(id - 1), dbGenres.get(id - 1)))
-                .toList();
     }
 
 }

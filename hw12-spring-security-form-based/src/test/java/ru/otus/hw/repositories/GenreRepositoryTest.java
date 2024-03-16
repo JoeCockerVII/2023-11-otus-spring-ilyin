@@ -3,15 +3,15 @@ package ru.otus.hw.repositories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import ru.otus.hw.TestHelper;
 import ru.otus.hw.models.Genre;
 
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,11 +25,17 @@ class GenreRepositoryTest {
     @Autowired
     private GenreRepository genreRepository;
 
+    @InjectMocks
+    private TestHelper testHelper;
+
     private List<Genre> dbGenres;
 
     @BeforeEach
     void setUp() {
-        dbGenres = getDbGenres();
+        dbGenres = testHelper.getDbGenresDto()
+                .stream()
+                .map(testHelper.getGenreMapper()::toModel)
+                .collect(Collectors.toList());
     }
 
     @Test
@@ -43,9 +49,9 @@ class GenreRepositoryTest {
     }
 
     @DisplayName("Get genre by id")
-    @ParameterizedTest
-    @MethodSource("getDbGenres")
-    void shouldGenreById(Genre expectedGenre) {
+    @Test
+    void shouldGenreById() {
+        var expectedGenre = dbGenres.get(0);
         var actualAuthor = genreRepository.findById(expectedGenre.getId());
         assertThat(actualAuthor)
                 .isPresent()
@@ -54,9 +60,4 @@ class GenreRepositoryTest {
                 .isEqualTo(expectedGenre);
     }
 
-    private static List<Genre> getDbGenres() {
-        return IntStream.range(1, 4).boxed()
-                .map(id -> new Genre(id.longValue(), "Genre_" + id))
-                .toList();
-    }
 }
