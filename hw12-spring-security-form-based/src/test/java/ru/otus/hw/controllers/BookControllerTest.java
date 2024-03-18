@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.hw.TestHelper;
+import ru.otus.hw.exceptions.NotFoundException;
 import ru.otus.hw.models.dto.BookDto;
 import ru.otus.hw.security.SecurityConfiguration;
 import ru.otus.hw.services.*;
@@ -24,7 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(BookController.class)
 @Import(SecurityConfiguration.class)
-@WithMockUser(username = "user", roles = "USER")
 public class BookControllerTest {
 
     @Autowired
@@ -57,6 +57,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Should get all books")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldGetAllBooks() throws Exception {
         given(bookService.findAll()).willReturn(books);
         var content = mockMvc.perform(get("/"))
@@ -71,6 +72,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Should save book")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldSaveBook() throws Exception {
         mockMvc.perform(post("/create")
                         .param("title", books.get(0).getTitle())
@@ -83,6 +85,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Should edit book")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldEditBook() throws Exception {
         mockMvc.perform(post("/edit")
                         .param("title", books.get(0).getTitle())
@@ -98,6 +101,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Should delete book")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldCorrectDeleteBook() throws Exception {
         long id = 1L;
         mockMvc.perform(delete("/delete/{id}", id))
@@ -107,6 +111,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Should redirect when empty title")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldRedirectWhenEmptyTitle() throws Exception {
         mockMvc.perform(post("/edit")
                         .param("title","")
@@ -121,6 +126,7 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Should redirect when incorrect id")
+    @WithMockUser(username = "user", roles = "USER")
     void shouldRedirectWhenIncorrectId() throws Exception {
         mockMvc.perform(post("/edit")
                         .param("title", books.get(0).getTitle())
@@ -132,5 +138,26 @@ public class BookControllerTest {
                 )
                 .andExpect(view().name("edit"));
     }
+
+    @Test
+    @DisplayName("Should get redirection on edit")
+    void unauthorizedTestOnEdit() throws Exception {
+        given(bookService.findById(1L)).willThrow(new NotFoundException());
+        mockMvc.perform(get("/edit")
+                        .param("id", "1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }
+
+    @Test
+    @DisplayName("Should get redirection on create")
+    void unauthorizedTestOnCreate() throws Exception {
+        given(bookService.findById(1L)).willThrow(new NotFoundException());
+        mockMvc.perform(get("/create")
+                        .param("id", "1"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
+    }
+
 
 }
