@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>List of all books</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        .persons {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .persons tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .persons td:last-child, td:first-child {
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<h3>books:</h3>
+
+<table class="persons">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Genre</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}">ID</td>
+        <td th:text="${book.title}">Title</td>
+        <td th:text="${book.author.fullName}">Author</td>
+        <td th:text="${book.genre.name}">Genre</td>
+        <td>
+            <a href="edit.html" th:href="@{/edit(id=${book.id})}">Edit</a>
+            <a href="delete.html" th:href="@{/delete/{id}(id=${book.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <a href="create.html" th:href="@{/create}">
+        <button type="button">Create book</button>
+    </a>
+</div>
+
+</body>
+</html>
