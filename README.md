@@ -14,3 +14,4 @@
 9. [CRUD приложение с Web UI и хранением данных в БД](hw09-spring-mvc-view)
 10. [Переписать приложение с использованием AJAX и REST-контроллеров](hw10-spring-mvc-ajax)
 11. [Использовать WebFlux](hw11-spring-webflux)
+12. [В CRUD Web-приложение добавить механизм аутентификации](hw12-spring-security-form-based)
