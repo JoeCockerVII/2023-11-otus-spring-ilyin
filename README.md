@@ -15,3 +15,4 @@
 10. [Переписать приложение с использованием AJAX и REST-контроллеров](hw10-spring-mvc-ajax)
 11. [Использовать WebFlux](hw11-spring-webflux)
 12. [В CRUD Web-приложение добавить механизм аутентификации](hw12-spring-security-form-based)
+13. [Ввести авторизацию на основе URL и/или доменных сущностей](hw13-spring-security-auth)
