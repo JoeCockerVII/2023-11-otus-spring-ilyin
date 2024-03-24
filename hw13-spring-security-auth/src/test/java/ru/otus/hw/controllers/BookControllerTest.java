@@ -20,6 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -100,13 +101,24 @@ public class BookControllerTest {
     }
 
     @Test
-    @DisplayName("Should delete book")
-    @WithMockUser(username = "user", roles = "USER")
+    @DisplayName("Should delete book by Admin")
+    @WithMockUser(username = "admin", roles = "ADMIN")
     void shouldCorrectDeleteBook() throws Exception {
         long id = 1L;
         mockMvc.perform(delete("/delete/{id}", id))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
+        verify(bookService).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("Shouldn't delete book by User")
+    @WithMockUser(username = "user", roles = "USER")
+    void shouldForbiddenDeleteBook() throws Exception {
+        long id = 1L;
+        mockMvc.perform(delete("/delete/{id}", id))
+                .andExpect(status().is4xxClientError());
+
     }
 
     @Test

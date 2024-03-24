@@ -25,9 +25,16 @@ create table if not exists comments(
     primary key (comment_id)
 );
 
+create table if not exists roles (
+    id bigserial,
+    name varchar(255),
+    primary key (id)
+);
+
 create table if not exists users (
     user_id bigserial,
     username varchar(255),
     password varchar(255),
+    role_id bigint references roles(id),
     primary key (user_id)
 );

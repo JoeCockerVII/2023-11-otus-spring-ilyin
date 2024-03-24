@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
         return User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .roles(user.getRole().getName())
                 .build();
     }
 

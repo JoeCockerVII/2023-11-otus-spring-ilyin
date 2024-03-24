@@ -27,12 +27,15 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/").authenticated()
+                        .requestMatchers("/edit").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/create").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/delete").hasAnyRole("ADMIN")
+                        .requestMatchers("/**").hasAnyRole("ADMIN")
+                        .anyRequest().denyAll()
                 )
                 .userDetailsService(userService)
                 .formLogin(Customizer.withDefaults());
-
         return http.build();
     }
 
