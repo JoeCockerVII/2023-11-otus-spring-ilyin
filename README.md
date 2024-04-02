@@ -17,3 +17,4 @@
 12. [В CRUD Web-приложение добавить механизм аутентификации](hw12-spring-security-form-based)
 13. [Ввести авторизацию на основе URL и/или доменных сущностей](hw13-spring-security-auth)
 14. [Используя Spring Batch сделать процедуру миграции из SQL БД в NoSQL или наоборот](hw14-spring-batch)
+15. [Реализовать обработку доменной сущности через каналы Spring Integration](hw15-spring-integration)
