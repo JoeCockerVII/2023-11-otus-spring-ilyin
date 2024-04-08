@@ -24,6 +24,8 @@
         <module>hw13-spring-security-auth</module>
         <module>hw14-spring-batch</module>
         <module>hw15-spring-integration</module>
+        <module>hw16-spring-boot-actuator</module>
+
     </modules>
 
     <properties>
