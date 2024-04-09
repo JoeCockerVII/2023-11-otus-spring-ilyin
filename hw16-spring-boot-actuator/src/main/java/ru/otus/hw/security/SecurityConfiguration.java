@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/edit").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/create").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/delete").hasAnyRole("ADMIN")
-                        .requestMatchers("/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/**").hasAnyRole("ADMIN","USER")
                         .anyRequest().denyAll()
                 )
                 .userDetailsService(userService)
