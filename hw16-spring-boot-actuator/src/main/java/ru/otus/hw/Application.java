@@ -10,6 +10,7 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 
 		System.out.printf("Application address: %n%s%n", "http://localhost:8090/");
+		System.out.printf("Actuator address: %n%s%n", "http://localhost:8090/actuator");
 	}
 
 }

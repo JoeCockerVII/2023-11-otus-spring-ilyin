@@ -15,17 +15,16 @@ public class BooksHealthIndicator implements HealthIndicator {
 
     @Override
     public Health health() {
-        int count = bookRepository.findAll().size();
-        if (count > 0) {
-            return Health.up()
-                    .status(Status.UP)
-                    .withDetail("message", "Bookshelf is not empty")
-                    .build();
-        } else {
-            return Health.down()
-                    .status(Status.DOWN)
-                    .withDetail("message", "Bookshelf is empty!")
-                    .build();
+        var count = bookRepository.count();
+        try {
+            if (count > 0) {
+                return Health.up().status(Status.UP).withDetail("message", "Bookshelf is not empty").build();
+            } else {
+                return Health.down().status(Status.DOWN).withDetail("message", "Bookshelf is empty!").build();
+            }
+        } catch (Exception e) {
+            return Health.down().status(Status.DOWN).withDetail("message", "Service is not available!").build();
         }
+
     }
 }
