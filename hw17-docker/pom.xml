@@ -12,7 +12,10 @@
 
     <description>hw17-docker</description>
 
+    <groupId>ru.otus.hw</groupId>
     <artifactId>hw17-docker</artifactId>
+    <version>0.0.1</version>
+    <name>hw17-docker</name>
 
     <properties>
         <maven.compiler.target>17</maven.compiler.target>
@@ -116,6 +119,10 @@
     <build>
         <plugins>
 
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

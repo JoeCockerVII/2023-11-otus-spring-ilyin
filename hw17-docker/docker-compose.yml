@@ -1,12 +1,26 @@
 version: '3'
-
 services:
-  library-db:
-    image: 'postgres:latest'
-    container_name: 'library-db-test'
+  library-app:
+    container_name: 'library-app'
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 5432:5432
+      - "8090:8090"
+    # Эти свойства перегружают соответствующие в application.yml
     environment:
-      - 'POSTGRES_USER=user'
-      - 'POSTGRES_HOST_AUTH_METHOD=trust'
-      - 'POSTGRES_DB=library_db'
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://library-db:5432/db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - library-db
+
+  library-db:
+    image: "postgres:13"
+    container_name: 'library-db'
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
