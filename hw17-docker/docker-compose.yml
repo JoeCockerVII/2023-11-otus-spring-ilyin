@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  library-db:
+    image: 'postgres:latest'
+    container_name: 'library-db-test'
+    ports:
+      - 5432:5432
+    environment:
+      - 'POSTGRES_USER=user'
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'
+      - 'POSTGRES_DB=library_db'
