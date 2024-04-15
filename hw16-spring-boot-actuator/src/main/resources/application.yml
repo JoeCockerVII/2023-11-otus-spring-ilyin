@@ -55,3 +55,10 @@ spring:
         use_sql_comments: true
 
     show-sql: true
+
+logging:
+  file:
+    name: logs/logfile.log
+
+  level:
+    root: info
