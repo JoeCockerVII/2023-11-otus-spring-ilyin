@@ -27,3 +27,4 @@ dependency-reduced-pom.xml
 spring-shell.log
 !**/src/main/**/target/
 !**/src/test/**/target/
+/logs/logfile.log
