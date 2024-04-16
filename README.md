@@ -18,4 +18,5 @@
 13. [Ввести авторизацию на основе URL и/или доменных сущностей](hw13-spring-security-auth)
 14. [Используя Spring Batch сделать процедуру миграции из SQL БД в NoSQL или наоборот](hw14-spring-batch)
 15. [Реализовать обработку доменной сущности через каналы Spring Integration](hw15-spring-integration)
+16. [Использовать метрики, healthchecks и logfile](hw16-spring-boot-actuator)
 17. [Обернуть приложение в docker-контейнер](hw17-docker)
