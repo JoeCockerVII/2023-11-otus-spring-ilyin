@@ -20,3 +20,4 @@
 15. [Реализовать обработку доменной сущности через каналы Spring Integration](hw15-spring-integration)
 16. [Использовать метрики, healthchecks и logfile](hw16-spring-boot-actuator)
 17. [Обернуть приложение в docker-контейнер](hw17-docker)
+18. [Обернуть внешние вызовы в Hystrix](hw18-hystrix)
