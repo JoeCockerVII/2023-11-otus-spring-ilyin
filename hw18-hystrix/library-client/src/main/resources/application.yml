@@ -1,0 +1,19 @@
+server:
+  error:
+    include-message: always
+    include-exception: true
+    include-binding-errors: always
+  port: 8070
+
+spring:
+  application:
+    name: library-client
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
