@@ -1,7 +1,8 @@
 version: '3'
 services:
+
   library-app:
-    container_name: 'library-app'
+    container_name: 'library-app-hw18'
     build:
       context: .
       dockerfile: library/Dockerfile
@@ -12,15 +13,45 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://library-db:5432/db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=postgres
+      - eureka.client.register-with-eureka=true
+      - eureka.client.fetch-registry=true
+      - eureka.client.service-url.defaultZone=http://eureka-server-hw18:8761/eureka/
+      - eureka.instance.prefer-ip-address=true
     depends_on:
       - library-db
+      - eureka-server-hw18
 
   library-db:
     image: "postgres:13"
-    container_name: 'library-db'
+    container_name: 'library-db-hw18'
     ports:
       - "5430:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=db
+
+  eureka-server-hw18:
+    container_name: 'eureka-server-hw18'
+    build:
+      context: .
+      dockerfile: eureka-server/Dockerfile
+    ports:
+      - "8761:8761"
+
+
+  library-client:
+    container_name: 'library-client-hw18'
+    build:
+      context: .
+      dockerfile: library-client/Dockerfile
+    ports:
+      - "8070:8070"
+    # Эти свойства перегружают соответствующие в application.yml
+    environment:
+      - eureka.client.register-with-eureka=true
+      - eureka.client.fetch-registry=true
+      - eureka.client.service-url.defaultZone=http://eureka-server-hw18:8761/eureka/
+      - eureka.instance.prefer-ip-address=true
+    depends_on:
+      - eureka-server-hw18
