@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.otus.hw.feign.BookServiceProxy;
 import ru.otus.hw.models.dto.BookCreateDto;
 import ru.otus.hw.models.dto.BookDto;
 import ru.otus.hw.models.dto.BookUpdateDto;
-import ru.otus.hw.services.BookService;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
 
-    private final BookService bookService;
+    private final BookServiceProxy bookService;
 
     @GetMapping("/books")
     public List<BookDto> getBooks() {
