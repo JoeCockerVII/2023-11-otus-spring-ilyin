@@ -10,8 +10,16 @@ import java.util.List;
 @FeignClient(name = "library-server", contextId = "library-genres")
 public interface GenreServiceProxy {
 
-    @CircuitBreaker(name = "library-server")
+    @CircuitBreaker(name = "library-server", fallbackMethod = "getDefaultGenres")
     @GetMapping("/genres")
     List<GenreDto> findAll();
+
+    default List<GenreDto> getDefaultGenres(Throwable throwable) {
+        return List.of(
+                new GenreDto(100L, "Genre_101"),
+                new GenreDto(102L, "Genre_102"),
+                new GenreDto(103L, "Genre_103")
+        );
+    }
 
 }

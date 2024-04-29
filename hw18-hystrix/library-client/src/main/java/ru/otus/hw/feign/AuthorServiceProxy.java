@@ -12,8 +12,16 @@ import java.util.List;
 @FeignClient(name = "library-server", contextId = "library-authors")
 public interface AuthorServiceProxy {
 
-    @CircuitBreaker(name = "library-server")
+    @CircuitBreaker(name = "library-server", fallbackMethod = "getDefaultAuthors")
     @GetMapping("/authors")
     List<AuthorDto> findAll();
 
+
+    default List<AuthorDto> getDefaultAuthors(Throwable throwable) {
+        return List.of(
+                new AuthorDto(101L,"Author_101"),
+                new AuthorDto(102L,"Author_102"),
+                new AuthorDto(103L,"Author_103")
+        );
+    }
 }
