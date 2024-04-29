@@ -1,11 +1,11 @@
 version: '3'
 services:
 
-  library-app:
-    container_name: 'library-app-hw18'
+  library-server:
+    container_name: 'library-server-hw18'
     build:
       context: .
-      dockerfile: library/Dockerfile
+      dockerfile: library-server/Dockerfile
     ports:
       - "8090:8090"
     # Эти свойства перегружают соответствующие в application.yml

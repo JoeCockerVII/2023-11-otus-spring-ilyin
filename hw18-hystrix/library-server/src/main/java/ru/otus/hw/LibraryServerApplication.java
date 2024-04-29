@@ -6,11 +6,11 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class LibraryApplication {
+public class LibraryServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LibraryApplication.class, args);
-		System.out.printf("Library Application address: %n%s%n", "http://localhost:8090");
+		SpringApplication.run(LibraryServerApplication.class, args);
+		System.out.printf("Library Server Application address: %n%s%n", "http://localhost:8090");
 	}
 
 }

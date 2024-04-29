@@ -10,12 +10,12 @@
         <relativePath/>
     </parent>
 
-    <description>library</description>
+    <description>library-server</description>
 
     <groupId>ru.otus.hw</groupId>
-    <artifactId>library</artifactId>
+    <artifactId>library-server</artifactId>
     <version>0.0.1</version>
-    <name>library</name>
+    <name>library-server</name>
 
     <properties>
         <maven.compiler.target>17</maven.compiler.target>

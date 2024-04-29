@@ -9,10 +9,10 @@ import ru.otus.hw.models.dto.AuthorDto;
 
 import java.util.List;
 
-@FeignClient(name = "library", contextId = "library-authors")
+@FeignClient(name = "library-server", contextId = "library-authors")
 public interface AuthorServiceProxy {
 
-    @CircuitBreaker(name = "library")
+    @CircuitBreaker(name = "library-server")
     @GetMapping("/authors")
     List<AuthorDto> findAll();
 

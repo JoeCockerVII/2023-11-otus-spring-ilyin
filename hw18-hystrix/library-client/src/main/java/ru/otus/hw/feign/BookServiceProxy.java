@@ -19,24 +19,24 @@ import ru.otus.hw.models.dto.GenreDto;
 
 import java.util.List;
 
-@FeignClient(name = "library", contextId = "library-books")
+@FeignClient(name = "library-server", contextId = "library-books")
 public interface BookServiceProxy {
 
-    @CircuitBreaker(name = "library", fallbackMethod = "getDefaultBooks")
+    @CircuitBreaker(name = "library-server", fallbackMethod = "getDefaultBooks")
     @GetMapping("/books")
     List<BookDto> findAll();
 
-    @CircuitBreaker(name = "library")
+    @CircuitBreaker(name = "library-server")
     @PostMapping("/books")
     @ResponseStatus(HttpStatus.CREATED)
     BookDto create(@Valid @RequestBody BookCreateDto bookCreateDto);
 
-    @CircuitBreaker(name = "library")
+    @CircuitBreaker(name = "library-server")
     @DeleteMapping("/books/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteById(@PathVariable("id") long id);
 
-    @CircuitBreaker(name = "library")
+    @CircuitBreaker(name = "library-server")
     @PutMapping("/books/{id}")
     BookDto update(@PathVariable("id") long id,
                       @Valid @RequestBody BookUpdateDto bookUpdateDto);

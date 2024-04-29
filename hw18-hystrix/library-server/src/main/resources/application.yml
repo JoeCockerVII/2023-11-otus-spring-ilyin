@@ -9,7 +9,7 @@ server:
 
 spring:
   application:
-    name: library
+    name: library-server
   sql:
     init:
       mode: always

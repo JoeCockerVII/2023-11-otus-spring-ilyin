@@ -7,10 +7,10 @@ import ru.otus.hw.models.dto.GenreDto;
 
 import java.util.List;
 
-@FeignClient(name = "library", contextId = "library-genres")
+@FeignClient(name = "library-server", contextId = "library-genres")
 public interface GenreServiceProxy {
 
-    @CircuitBreaker(name = "library")
+    @CircuitBreaker(name = "library-server")
     @GetMapping("/genres")
     List<GenreDto> findAll();
 

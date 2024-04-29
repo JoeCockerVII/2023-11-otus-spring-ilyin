@@ -19,7 +19,7 @@
 
     <modules>
         <module>eureka-server</module>
-        <module>library</module>
+        <module>library-server</module>
         <module>library-client</module>
     </modules>
 
