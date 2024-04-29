@@ -19,28 +19,34 @@ import ru.otus.hw.models.dto.GenreDto;
 
 import java.util.List;
 
-@FeignClient(name = "library")
+@FeignClient(name = "library", contextId = "library-books")
 public interface BookServiceProxy {
 
     @CircuitBreaker(name = "library", fallbackMethod = "getDefaultBooks")
     @GetMapping("/books")
     List<BookDto> findAll();
 
+    @CircuitBreaker(name = "library")
     @PostMapping("/books")
     @ResponseStatus(HttpStatus.CREATED)
     BookDto create(@Valid @RequestBody BookCreateDto bookCreateDto);
 
+    @CircuitBreaker(name = "library")
     @DeleteMapping("/books/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void deleteById(@PathVariable("id") long id);
 
+    @CircuitBreaker(name = "library")
     @PutMapping("/books/{id}")
     BookDto update(@PathVariable("id") long id,
                       @Valid @RequestBody BookUpdateDto bookUpdateDto);
 
     default List<BookDto> getDefaultBooks(Throwable throwable) {
-        return List.of(new BookDto(100L,"Title_100", new AuthorDto(100L,"Author_100"),
-                new GenreDto(100L, "Genre_100")));
+        return List.of(
+                new BookDto(101L,"Title_101", new AuthorDto(101L,"Author_101"), new GenreDto(100L, "Genre_101")),
+                new BookDto(102L,"Title_102", new AuthorDto(102L,"Author_102"), new GenreDto(102L, "Genre_102")),
+                new BookDto(103L,"Title_103", new AuthorDto(103L,"Author_103"), new GenreDto(103L, "Genre_103"))
+        );
     }
 
 }

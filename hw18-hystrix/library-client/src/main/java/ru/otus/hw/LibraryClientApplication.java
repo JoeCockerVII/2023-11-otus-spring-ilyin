@@ -13,7 +13,7 @@ public class LibraryClientApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryClientApplication.class, args);
 
-		System.out.printf("Library Client address: %n%s%n", "http://localhost:8070/books");
+		System.out.printf("Library Client address: %n%s%n", "http://localhost:8070");
 	}
 
 }
