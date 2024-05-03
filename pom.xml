@@ -25,8 +25,8 @@
         <module>hw14-spring-batch</module>
         <module>hw15-spring-integration</module>
         <module>hw16-spring-boot-actuator</module>
-
         <module>hw17-docker</module>
+        <module>hw18-hystrix</module>
     </modules>
 
     <properties>

@@ -1,0 +1,17 @@
+server:
+  error:
+    include-message: always
+    include-exception: true
+    include-binding-errors: always
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+  server:
+    registry-sync-retries: 3
